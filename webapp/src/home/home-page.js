@@ -1,10 +1,15 @@
 import React, { Fragment } from 'react'
-import { useQuery } from '@apollo/client'
-import GetTransactions from '../gql/transactions.gql'
+// import { useQuery } from '@apollo/client'
+// import GetTransactions from '../gql/transactions.gql'
 import { TxTable } from '../components/transactions/TxTable'
 
 export function Home () {
-  const { loading, error, data = {} } = useQuery(GetTransactions)
+  // const { loading, error, data = {} } = useQuery(GetTransactions)
+  let loading = false
+  let error = false
+  let data = require('../../fakedata').data
+
+  console.log(data)
 
   if (loading) {
     return (
