@@ -2,14 +2,13 @@ import React, { Fragment } from 'react'
 // import { useQuery } from '@apollo/client'
 // import GetTransactions from '../gql/transactions.gql'
 import { TxTable } from '../components/transactions/TxTable'
+import { array } from 'prop-types'
 
-export function Home () {
+export function Home (props) {
   // const { loading, error, data = {} } = useQuery(GetTransactions)
   let loading = false
   let error = false
-  let data = require('../../fakedata').data
-
-  console.log(data)
+  let { transactions } = props
 
   if (loading) {
     return (
@@ -29,7 +28,11 @@ export function Home () {
 
   return (
     <Fragment>
-      <TxTable data={data.transactions} />
+      <TxTable data={transactions} />
     </Fragment>
   )
+}
+
+Home.propTypes = {
+  transactions: array
 }

@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { css } from '@emotion/core'
 import { Home } from './home'
+import { Input } from './components/input/Input'
 
 function AppRouter () {
+  let rawData = require('../fakedata').data
+  const [ transactions, setTransactions ] = useState(rawData.transactions)
+
+  function handleTransactionChange (transaction) {
+    let newState = transactions
+    newState.push(transaction)
+    setTransactions(newState)
+  }
+
   return (
     <Router>
       <div css={layoutStyle}>
@@ -13,13 +23,19 @@ function AppRouter () {
               <Link to='/'>Home</Link>
             </li>
             <li>
-              <Link to='/another'>Another route</Link>
+              <Link to='/input'>Input Transactions</Link>
             </li>
           </ul>
         </nav>
         <div className='main-content' css={contentStyle}>
-          <Route component={Home} exact path='/' />
-          <Route component={() => (<div>Content for /another route</div>)} exact path='/another' />
+          <Route exact path='/' render={() => (<Home transactions={transactions} />)} />
+          <Route exact path='/input' render={() =>
+            (
+              <Input
+                mutation={handleTransactionChange}
+              />
+            )}
+          />
         </div>
       </div>
     </Router>
