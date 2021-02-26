@@ -4,6 +4,13 @@ import { css } from '@emotion/core'
 import { Home } from './home'
 import { Input } from './components/input/Input'
 
+/**
+ * I generally wouldn't put a bunch of logic in the router, but the way
+ * this project is set up sort of makes it sensible to do it this way.
+ * I would prefer to not use a router unless completely necessary and
+ * just load components into a 'home' wrapper. Thus, I am effectively
+ * treating this file as a wrapper.
+ */
 function AppRouter () {
   let rawData = require('../fakedata').data
   const [ transactions, setTransactions ] = useState(rawData.transactions)
