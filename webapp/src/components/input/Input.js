@@ -20,27 +20,29 @@ export function Input (props) {
   const [ current, setCurrent ] = useState(emptyObject)
 
   function handleClick () {
-    console.log('click')
-    // assume the input is valid
-    mutation(current)
-    setCurrent(emptyObject)
+    // validate the form
+    let num = parseFloat(current.amount)
+    let temp = {
+      ...current,
+      'amount': num
+    }
+    console.log(temp)
+
+    mutation(temp)
+    clearInput()
+  }
+
+  function clearInput () {
+    setCurrent(() => ({
+      ...emptyObject
+    }))
   }
 
   function handleChange (changeKey, change) {
-    console.log('handle')
-    let changes = {}
-    changes[changeKey] = change
-    let temp = current
-    for (const key in temp) {
-      if (changes[key]) {
-        if (key === 'amount') {
-          changes[key] = parseFloat(changes[key])
-        }
-        temp[key] = changes[key]
-        break
-      }
-    }
-    setCurrent(temp)
+    setCurrent(prevState => ({
+      ...prevState,
+      [changeKey]: change
+    }))
   }
 
   return (
@@ -84,15 +86,15 @@ Input.propTypes = {
 
 function FormElement (props) {
   const { label, value, onChange } = props
-  const [ val, setValue ] = useState(value)
+  // const [ val, setValue ] = useState(value)
 
   return (
     <div>
       {label} <input onChange={event => {
         onChange(event.target.value)
-        setValue(event.target.value)
+        // setValue(event.target.value)
       }
-      } value={val} />
+      } value={value} />
     </div>
   )
 }
